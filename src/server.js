@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
-
+const env = process.NODE_ENV || 'development'
 const socketio = require('socket.io');
 const http = require('http');
 
@@ -15,6 +15,8 @@ const io = socketio(server);
 mongoose.connect('mongodb+srv://omnistack:omnistack@omnistack-jxhrd.mongodb.net/semana09?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useFindAndModify: false
+
 })
 
 const connectedUsers = {};
@@ -43,4 +45,4 @@ app.use(express.json());
 app.use('/files', express.static(path.resolve(__dirname, '..', 'uploads')));
 app.use(routes);
 
-server.listen(3333);
+server.listen(process.env.PORT || 3333);
